@@ -214,23 +214,6 @@ class Game(Base):
                         end_state = round(random.randint(5, 7) + .5 + rand_end, 2)
                     elif decision == 3:
                         end_state = round(random.randint(5, 7) + .25 + rand_end, 2)
-                elif self.spot_count == 8:
-                    if decision == 2:
-                        end_state = round(random.randint(5, 7) + .75 + rand_end, 2)
-                    if decision == 1:
-                        end_state = round(random.randint(5, 7) + rand_end, 2)
-                    elif decision == 4:
-                        end_state = round(random.randint(5, 7) + .5 + rand_end, 2)
-                    elif decision == 3:
-                        end_state = round(random.randint(5, 7) + .125 + rand_end, 2)
-                    if decision == 6:
-                        end_state = round(random.randint(5, 7) + .625 + rand_end, 2)
-                    if decision == 5:
-                        end_state = round(random.randint(5, 7) + rand_end, 2)
-                    elif decision == 8:
-                        end_state = round(random.randint(5, 7) + .375 + rand_end, 2)
-                    elif decision == 7:
-                        end_state = round(random.randint(5, 7) + .125 + rand_end, 2)
 
                 self.state = f"2:3:{end_state}"
         elif split_state[0] == "2":
