@@ -1,0 +1,79 @@
+<head>
+  {% include "components/styles.html"%}
+  {% include "components/svgs.html"%}
+  <meta http-equiv="refresh" content="3">
+</head>
+{% if player %}
+	<arcade-top-bar>
+		<filler></filler>
+		<balance>
+		{% include "components/balance.html"%}
+		</balance>
+	</arcade-top-bar>
+{% endif %}
+<main>
+	<if-cont>
+		<games>
+			{% for game in current_games%}
+				{% set game_state_split = game.state.split(":")%}
+				{% if game_state_split[0] == "2"%}
+				<style>
+					.rolling-{{game.num}} {
+						animation: g-turn-{{game.num}} {{3*(1 - (game_state_split[1]|float / game_state_split[2]|float))}}s forwards cubic-bezier(.5,0,0,1);
+					}
+
+					@keyframes g-turn-{{game.num}} {
+					  from {
+					  	transform: rotate(0turn);
+					  }
+					  to {transform: rotate({{game_state_split[2]|float}}turn);}
+					}
+				</style>
+				{% elif game_state_split[0] == "3"%}
+				<style>
+					.finished-{{game.num}} {
+						transform: rotate({{game_state_split[3]|float}}turn);
+					}
+				</style>
+				{%endif%}
+				<a href="/arcade/game/{{game.num}}" class="game">
+				<g-win-caret></g-win-caret>
+				<g-inner>
+				{% include "components/g-inner.html"%}
+				</g-inner>
+				<g-display {% if game_state_split[0] == "2"%}class="rolling-{{game.num}}"{% elif game_state_split[0] == "3"%}class="finished-{{game.num}}"{%endif%}>
+					{% if game.spot_count == 4%}
+					{% for i in range(1,5) %}
+						{% set active_spot = {"spot":none} %}
+						{% for spot in game.spots%}
+							{% if spot.spot_num == i %}
+								{% set _ = active_spot.update({'spot': spot}) %}
+							{% endif %}
+						{% endfor %}
+						{% if active_spot.spot %}
+							<g-4-{{i}} style="background: #{{config.USER_COLORS[active_spot.spot.player_id[:8]|int(base=16) % config.USER_COLORS|length]}}cc;  outline: none;" {% if game_state_split[0] == "3" and game_state_split[2]|int == active_spot.spot.spot_num %}class="win-spot">{{active_spot.spot.player.display[0:8]|capitalize}}{%else%}>{%endif%}</g-4-{{i}}>
+						{% else %}
+							<g-4-{{i}}></g-4-{{i}}>
+						{% endif %}
+					{% endfor %}
+					{% elif game.spot_count == 2%}
+					{% for i in range(1,3) %}
+						{% set active_spot = {"spot":none} %}
+						{% for spot in game.spots%}
+							{% if spot.spot_num == i %}
+								{% set _ = active_spot.update({'spot': spot}) %}
+							{% endif %}
+						{% endfor %}
+						{% if active_spot.spot %}
+							<g-2-{{i}} style="background: #{{config.USER_COLORS[active_spot.spot.player_id[:8]|int(base=16) % config.USER_COLORS|length]}}cc;  outline: none;" {% if game_state_split[0] == "3" and game_state_split[2]|int == active_spot.spot.spot_num %}class="win-spot"><g-2-{{i}}-i>{{active_spot.spot.player.display[0:8]|capitalize}}{%else%}><g-2-{{i}}-i>{%endif%}</g-2-{{i}}-i></g-2-{{i}}>
+						{% else %}
+							<g-2-{{i}}><g-2-{{i}}-i></g-2-{{i}}-i></g-2-{{i}}>
+						{% endif %}
+					{% endfor %}
+					{%endif%}
+				</g-display>
+				</a>
+			{% endfor %}
+		</games>
+	</if-cont>
+</main>

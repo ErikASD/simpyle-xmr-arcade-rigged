@@ -1,0 +1,29 @@
+
+<xmr-rate>
+	<xmr-rate-usd-pair>
+	<g-usd-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-usd-s"></use></svg></g-usd-i>
+	{{curr_xmr_rate}}
+	</xmr-rate-usd-pair>
+	=
+	<xmr-rate-xmr-pair>
+	<g-xmr-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xmr-s"></use></svg></g-xmr-i>
+	1
+	</xmr-rate-xmr-pair>
+</xmr-rate>
+<spacer style="width: 100%;"></spacer>
+<a class="usd-balance {% if bal_display == 'USD'%}usd-balance-active{%endif%}" href="/balance/display/USD?from_pg={% if page == 'arcade-i'%}arcade{% elif page == 'game'%}game-{{game.num}}{% else %}{{page}}{%endif%}">
+		<!-- USD ICON -->
+		<usd>
+		<svg height="16px" width="16px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-usd"></use></svg>
+		</usd>
+		<!-- USD ICON -->
+		<div>{{"{:,.2f}".format(((player.balance/(1000*1000*1000*1000)) * curr_xmr_rate))}}</div>
+</a>
+		<a class="xmr-balance {% if bal_display == 'XMR'%}xmr-balance-active{%endif%}" href="/balance/display/XMR?from_pg={% if page == 'arcade-i'%}arcade{% elif page == 'game'%}game-{{game.num}}{% else %}{{page}}{%endif%}">
+		<!-- XMR ICON -->
+		<xmr>
+		<svg height="16px" width="16px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xmr"></use></svg>
+		</xmr>
+		<!-- XMR ICON -->
+		<div>{{"{:,.6f}".format(player.balance/(1000*1000*1000*1000))}}</div>
+</a>

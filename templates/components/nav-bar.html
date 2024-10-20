@@ -1,0 +1,13 @@
+<nav>
+	<a href="/arcade" class="arcade {% if page == "arcade"%}active-arcade{%endif%}">Arcade</a>
+	{% if player%}
+	<a href="/deposit" {% if page == "deposit"%}class="active"{%endif%}>Deposit</a>
+	<a href="/withdraw" {% if page == "withdraw"%}class="active"{%endif%}>Withdraw</a>
+	{% endif %}
+	<spacer></spacer>
+	{% if player%}
+	<a href="/player" {% if page == "player"%}class="active"{%endif%} style="background: #{{player.id[:6]}}22;">Player</a>
+	{% else %}
+	<a href="/player/login" {% if page == "player_login"%}class="active"{%endif%}>Login</a>
+	{% endif%}
+</nav>

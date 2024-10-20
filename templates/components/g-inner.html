@@ -1,0 +1,29 @@
+{% if game.state == "waiting"%}
+	{% if bal_display == "XMR" %}
+		<g-xmr-cost><g-xmr-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xmr-s"></use></svg></g-xmr-i> {{game.prize}} </g-xmr-cost>
+	{% elif bal_display == "USD"%}
+		<g-usd-est><g-usd-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-usd-s"></use></svg></g-usd-i>{{"{:,.2f}".format(game.prize * curr_xmr_rate)}}</g-usd-est>
+	{% endif%}
+{% elif game_state_split[0] == "1"%}
+	{% if bal_display == "XMR" %}
+		<g-xmr-cost><g-xmr-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xmr-s"></use></svg></g-xmr-i> {{game.prize}}</g-xmr-cost>
+	{% elif bal_display == "USD"%}
+		<g-usd-est><g-usd-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-usd-s"></use></svg></g-usd-i>{{"{:,.2f}".format(game.prize * curr_xmr_rate)}}</g-usd-est>
+	{% endif%}
+	{{game_state_split[1]}}s
+{% elif game_state_split[0] == "2"%}
+	{% if bal_display == "XMR" %}
+		<g-xmr-cost><g-xmr-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xmr-s"></use></svg></g-xmr-i> {{game.prize}}</g-xmr-cost>
+	{% elif bal_display == "USD"%}
+		<g-usd-est><g-usd-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-usd-s"></use></svg></g-usd-i>{{"{:,.2f}".format(game.prize * curr_xmr_rate)}}</g-usd-est>
+	{% endif%}
+	Rolling...
+{% elif game_state_split[0] == "3"%}
+	{% if bal_display == "XMR" %}
+		<g-xmr-cost><g-xmr-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xmr-s"></use></svg></g-xmr-i> {{game.prize}}</g-xmr-cost>
+	{% elif bal_display == "USD"%}
+		<g-usd-est><g-usd-i><svg height="12px" width="12px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-usd-s"></use></svg></g-usd-i>{{"{:,.2f}".format(game.prize * curr_xmr_rate)}}</g-usd-est>
+	{% endif%}
+	Winner<br>
+	{{game.get_spot_num(db, game_state_split[2]).player.display[0:8]|capitalize}} 
+{%endif%}
