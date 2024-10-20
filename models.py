@@ -81,15 +81,6 @@ class Player(Base):
         exist = db.scalar(exists().where(Player.display == display).select())
         return exist
 
-    def login(db, display, password):
-        player = Player.get_by_display(db, display)
-        if not player:
-            return None
-        try_password = sha256((password+player.salt).encode()).hexdigest()
-        if try_password != player.hashed_password:
-            return None
-        return player
-
     def get(db, id):
         player = db.query(Player).filter(Player.id == id).one_or_none()
         return player
